@@ -23,7 +23,17 @@ export default function App() {
 
 
     const snakeOne = new Snake();
+    const snakeTwo = new Snake();
     snakeOne.move(1);
+    display("Snake One position = " + snakeOne.position)
+    snakeOne.turn();
+    snakeOne.move(4);
+    display("Snake One position after turning and moving = " + snakeOne.position)
+    snakeTwo.move(5);
+    display("Snake Two position = " + snakeTwo.position)
+    snakeTwo.turn();
+    snakeTwo.move(10);
+    display("Snake Two position after turning and moving =" + snakeTwo.position)
   }, []);
   return (
     <div className="App">
