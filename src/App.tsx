@@ -21,10 +21,10 @@ export default function App() {
     duckOne.quack();
     duckTwo.quack();
 
-
+    /**
     const snakeOne = new Snake();
     const snakeTwo = new Snake();
-    /**
+    
     snakeOne.move(1);
     display("Snake One position = " + snakeOne.position)
     snakeOne.turn();
