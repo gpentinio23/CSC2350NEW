@@ -24,6 +24,7 @@ export default function App() {
 
     const snakeOne = new Snake();
     const snakeTwo = new Snake();
+    /**
     snakeOne.move(1);
     display("Snake One position = " + snakeOne.position)
     snakeOne.turn();
@@ -34,7 +35,9 @@ export default function App() {
     snakeTwo.turn();
     snakeTwo.move(10);
     display("Snake Two position after turning and moving =" + snakeTwo.position)
+    */
   }, []);
+
   return (
     <div className="App">
       <h1>Hello CodeSandbox</h1>
@@ -42,4 +45,5 @@ export default function App() {
       <Display />
     </div>
   );
+
 }
