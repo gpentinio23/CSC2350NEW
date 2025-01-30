@@ -3,8 +3,8 @@ import Snake from "./Snake";
 
 
 class WorldModel{
-	private snakeone: Snake;
-	constructor (snake){
+	private snake: Snake;
+	constructor (snake: Snake){
 		this.snake = snake;
 	}
 	/**Update method to move the snake
