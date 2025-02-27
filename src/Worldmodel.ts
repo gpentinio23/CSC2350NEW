@@ -15,7 +15,7 @@ class WorldModel{
 	}
 	/**Retrieves the snake
 	 */
-	public getSnake(): Snake {
+	public get Snake(): Snake {
 		return this.snake;
 	} 
 }

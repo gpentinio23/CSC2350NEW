@@ -8,7 +8,7 @@
 // -2 = down
  /**Class representing a snake. */
 class Snake {
-	private currentPosition: number;
+	//private currentPosition: number;
 	private currentDirection: number;
 	public position: Point;
 	/**
@@ -16,7 +16,7 @@ class Snake {
 	 * Constructor variables for currentPosition, currentDirection and position to point towards
 	 */
 	constructor(curPosition:number, curDirection:number){
-		this.currentPosition = curPosition;
+		//this.currentPosition = curPosition;
 		this.currentDirection = curDirection		
 		this.position = new Point(0,0);
 
@@ -60,8 +60,8 @@ class Snake {
 		else if (this.currentDirection === -2){
 			this.currentDirection = 1
 		}
-		else if (this.currentDirection === 1){
-			this.currentDirection = - 1
+		else if (this.currentDirection === 2){
+			this.currentDirection = -1
 		}
 	}
 	/**Turn right method in this order:
@@ -81,7 +81,7 @@ class Snake {
 		if (this.currentDirection === -2){
 			this.currentDirection = -1
 		}
-		if (this.currentDirection === 1){
+		if (this.currentDirection === 2){
 			this.currentDirection = 1
 		}
 

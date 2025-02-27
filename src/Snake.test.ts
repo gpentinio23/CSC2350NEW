@@ -64,13 +64,40 @@ it("updates the x-position correctly after moving", function() {
   expect(snake1.position.x).toBe(numSquares5)
 });
 
-it("updates the y-position correctly after moving",function() {
-  //Facing up so moves down
-  let snake1 = new Snake(0,2)
-  const numSquares4 = Math.floor(Math.random()*10+1);
-  snake1.move(numSquares4)
-  expect(snake1.position.y).toBe(numSquares4*-1)
+
+it("use move and turn left multiple times", function(){
+  let snake1 = new Snake(0,1)
+  snake1.move(2)
+  expect(snake1.position.x).toBe(2)
+  expect(snake1.position.y).toBe(0)
+  snake1.move(3)
+  snake1.turnLeft()//Now facing up
+  snake1.move(1)
+  expect(snake1.position.x).toBe(5)
+  expect(snake1.position.y).toBe(-1)
+  snake1.turnLeft()//Now facing left
+  snake1.move(1)
+  expect(snake1.position.x).toBe(4)
+  expect(snake1.position.y).toBe(-1)
 });
 
+it ("use move and turn right multiple times", function() {
+  let snake2 = new Snake(1,2)
+  snake2.move(3)
+  expect(snake2.position.x).toBe(0)
+  expect(snake2.position.y).toBe(-3)
+  snake2.move(4)
+  snake2.turnRight()
+  snake2.move(3)
+  expect(snake2.position.x).toBe(3)
+  snake2.turnRight()
+  snake2.turnRight()
+  snake2.move(5)
+  expect(snake2.position.x).toBe(8)
+  expect(snake2.position.y).toBe(-7)
+
+
+
+});
 
 export {};
