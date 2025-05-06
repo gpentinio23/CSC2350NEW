@@ -1,4 +1,5 @@
- import display from "./display";
+import display from "./display";
+import Point from "./Point";
 
 // place your code on line 5 above the export statement below
 
@@ -87,6 +88,13 @@ class Snake {
 
 	}
 
+    /**Get the direction position of the snake
+     * @returns the current direction of the snake
+     */
+	public get direction() {
+        return this.currentDirection;
+	}
+
 /**
 	public turn(){
 		if (this.currentDirection === 1){
@@ -108,19 +116,6 @@ class Snake {
 /**Class representing the snake on the x,y coordinate plane
  */
 
-class Point{
-	constructor(private xcoord:number, private ycoord:number){
-	}
-	/**
-	 * The current x,y coordinates of the snake
-	 */
-			public get x(){
-			return this.xcoord
-		}
-			public get y(){
-			return this.ycoord
-		}
-}
 /**
 const snakeThree = new Snake();
 const myWorld = new WorldModel();
