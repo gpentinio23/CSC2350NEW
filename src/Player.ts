@@ -4,6 +4,7 @@ import Worldmodel from "./Worldmodel";
 import Point from "./Point";
 
 
+
 abstract class Player {
 	protected sc: SnakeController;
 
@@ -65,3 +66,7 @@ class AvoidWallsPlayer extends Player {
 		// Otherwise: no imminent wall collision → do nothing
 	}
 }
+
+
+export default Player;
+export default AvoidWallsPlayer;
