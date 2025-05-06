@@ -3,8 +3,10 @@ import SnakeController from "./SnakeController";
 import Worldmodel from "./Worldmodel";
 import Point from "./Point";
 
-
-
+/**Class representing the player
+ * Takes the SnakeController as an argument in the constructor
+ * Contains a makeTurn abstract method
+ */
 abstract class Player {
 	protected sc: SnakeController;
 
@@ -15,39 +17,48 @@ abstract class Player {
 	abstract makeTurn(): void;
 }
 
+/**
+ * Class extending from the player class that makes
+ * sure that the snake won't crash into a wall
+ */
 class AvoidWallsPlayer extends Player {
 	constructor(sc: SnakeController) {
 		super(sc);
 	}
 
+	/**
+	 * Decides if the snake needs to turn to avoid hitting the wall.
+	 * Turns the snake left or right depending on its position and direction.
+	 */
 	public makeTurn(): void {
-		const direction = this.sc.snakeDirection;
-		const pos = this.sc.snakePosition;
-		const worldW = this.sc.worldWidth;
-		const worldH = this.sc.worldHeight;
-		const halfH = worldH / 2;
-		const halfW = worldW / 2;
-		const atTopEdge = pos.y === 0;
-		const atBottomEdge = pos.y === worldH - 1;
-		const atLeftEdge = pos.x === 0;
-		const atRightEdge = pos.x === worldW - 1;
-		// If facing left and at left edge
+		let direction = this.sc.snakeDirection;
+		let pos = this.sc.snakePosition;
+		let worldW = this.sc.worldWidth;
+		let worldH = this.sc.worldHeight;
+		let halfH = worldH / 2;
+		let halfW = worldW / 2;
+		let atTopEdge = pos.y === 0;
+		let atBottomEdge = pos.y === worldH - 1;
+		let atLeftEdge = pos.x === 0;
+		let atRightEdge = pos.x === worldW - 1;
+
+		// If facing left and at the left edge, turn up or down
 		if (direction === -1 && atLeftEdge) {
 			if (pos.y <= halfH) {
-				this.sc.turnSnakeLeft();  // go up
+				this.sc.turnSnakeLeft(); // go up
 			} else {
 				this.sc.turnSnakeRight(); // go down
 			}
 		}
-		// If facing right and at right edge
+		// If facing right and at the right edge, turn down or up
 		else if (direction === 1 && atRightEdge) {
 			if (pos.y <= halfH) {
 				this.sc.turnSnakeRight(); // go down
 			} else {
-				this.sc.turnSnakeLeft();  // go up
+				this.sc.turnSnakeLeft(); // go up
 			}
 		}
-		// If facing up and at top edge
+		// If facing up and at the top edge, turn left or right
 		else if (direction === 2 && atTopEdge) {
 			if (pos.x <= halfW) {
 				this.sc.turnSnakeLeft(); // go left
@@ -55,7 +66,7 @@ class AvoidWallsPlayer extends Player {
 				this.sc.turnSnakeRight(); // go right
 			}
 		}
-		// If facing down and at bottom edge
+		// If facing down and at the bottom edge, turn right or left
 		else if (direction === -2 && atBottomEdge) {
 			if (pos.x <= halfW) {
 				this.sc.turnSnakeRight(); // go right
@@ -63,10 +74,11 @@ class AvoidWallsPlayer extends Player {
 				this.sc.turnSnakeLeft(); // go left
 			}
 		}
-		// Otherwise: no imminent wall collision → do nothing
 	}
 }
 
+// Use named export for AvoidWallsPlayer
+export { AvoidWallsPlayer };
 
+// Default export for Player
 export default Player;
-export default AvoidWallsPlayer;
