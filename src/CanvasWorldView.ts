@@ -29,7 +29,8 @@ export class CanvasWorldView implements IWorldView {
     let width = world.width * this.scalingFactor;
     let height = world.height * this.scalingFactor;
     this.worldCanvas.width = width;
-    this.worldCanvas.height = height;
+      this.worldCanvas.height = height;
+    this.context.clearRect(0, 0, width, height);
     this.context.fillStyle = "black";
     this.context.fillRect(0,0,width,height)
     //this.context.clearRect(0, 0, width, height);

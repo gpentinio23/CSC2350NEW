@@ -1,6 +1,6 @@
 import Snake from "./Snake";
 import IWorldView from "./IWorldView"
-
+import Point from "./Point";
 
 
 class WorldModel{
@@ -16,8 +16,20 @@ class WorldModel{
 	/**Update method to move the snake
 	 * @param steps - the number of squares to move the snake
 	 */
-	public update(steps:number){
+	update(steps: number): void {
+		if (this.snake.position.x < 0) {
+			this.snake.position = new Point(0, this.snake.position.y);
+		} else if (this.snake.position.x >= this.width) {
+			this.snake.position = new Point(this.width - 1, this.snake.position.y);
+		}
+
+		if (this.snake.position.y < 0) {
+			this.snake.position = new Point(this.snake.position.x, 0);
+		} else if (this.snake.position.y >= this.height) {
+			this.snake.position = new Point(this.snake.position.x, this.height - 1);
+		}
 		this.snake.move(steps);
+
 		if (this.worldView){
 			this.worldView.display(this)
 		}

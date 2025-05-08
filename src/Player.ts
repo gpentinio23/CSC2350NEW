@@ -37,10 +37,10 @@ class AvoidWallsPlayer extends Player {
 		let worldH = this.sc.worldHeight;
 		let halfH = worldH / 2;
 		let halfW = worldW / 2;
-		let atTopEdge = pos.y === 0;
-		let atBottomEdge = pos.y === worldH - 1;
-		let atLeftEdge = pos.x === 0;
-		let atRightEdge = pos.x === worldW - 1;
+		let atTopEdge = pos.y <= 0;
+		let atBottomEdge = pos.y >= worldH - 1;
+		let atLeftEdge = pos.x <= 0;
+		let atRightEdge = pos.x >= worldW - 1;
 
 		// If facing left and at the left edge, turn up or down
 		if (direction === -1 && atLeftEdge) {

@@ -1,7 +1,7 @@
 import display from "./display";
 import Point from "./Point";
 
-// place your code on line 5 above the export statement below
+
 
 // -1 = left
 // 1 =right
@@ -16,17 +16,17 @@ class Snake {
 	 * Create a snake.
 	 * Constructor variables for currentPosition, currentDirection and position to point towards
 	 */
-	constructor(curPosition:number, curDirection:number){
+	constructor(curPosition:number, curDirection:number = 1){
 		//this.currentPosition = curPosition;
 		this.currentDirection = curDirection		
-		this.position = new Point(0,0);
+		this.position = new Point(curPosition,curPosition)
 
 	/**
 	 * Moves the snake for the given number of squares
 	 * @param squres - number of squares to move the snake
 	 */
 	}
-	public move(squares:number){
+	public move(squares: number){
 		//Facing right
 		if (this.currentDirection ===1){
 			this.position = new Point(this.position.x +squares, this.position.y)
@@ -76,13 +76,13 @@ class Snake {
 		if (this.currentDirection === 1){
 			this.currentDirection = -2
 		}
-		if (this.currentDirection === -1){
+		else if (this.currentDirection === -1){
 			this.currentDirection = 2
 		}
-		if (this.currentDirection === -2){
+		else if (this.currentDirection === -2){
 			this.currentDirection = -1
 		}
-		if (this.currentDirection === 2){
+		else if (this.currentDirection === 2){
 			this.currentDirection = 1
 		}
 

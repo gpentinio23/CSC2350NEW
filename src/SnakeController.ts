@@ -17,19 +17,21 @@ class SnakeController {
      * @param worldModel The world model.
      * @param snake The snake to control.
      */
-    constructor(worldModel: WorldModel, snake: Snake) {
-        this.slitherer = snake;
-        this.snakeWorld = worldModel;
+    constructor(snakeWorld: WorldModel, slitherer: Snake) {
+        this.slitherer = slitherer;
+        this.snakeWorld = snakeWorld;
     }
 
     /** Turns the snake right. */
     public turnSnakeRight(): void {
         this.slitherer.turnRight();
+        console.log(`Snake turned right, new direction: ${this.slitherer.direction}`); // Add this line
     }
 
     /** Turns the snake left. */
     public turnSnakeLeft(): void {
         this.slitherer.turnLeft();
+        console.log(`Snake turned left, new direction: ${this.slitherer.direction}`); // Add this line
     }
 
     /** Gets the snake's position. */

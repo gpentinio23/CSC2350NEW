@@ -1,62 +1,51 @@
-import "./App.css";
-import { useEffect } from "react";
-import Display from "./ConsoleDisplay";
-import display from "./display";
- import Car from "./Car";
- import Duck from "./Duck";
- import Snake from "./Snake";
- import CanvasWorldView from "./CanvasWorldView";
- import WorldModel from "./Worldmodel"
- import SnakeController from "./SnakeController"
- import IWorldView from "./IWorldView";
+
+import { useEffect, useRef } from "react";
+import Snake from "./Snake";
+import CanvasWorldView from "./CanvasWorldView";
+import WorldModel from "./Worldmodel";
+import SnakeController from "./SnakeController";
+import HumanPlayer from "./HumanPlayer";
+import LRKeyInputHandler from "./LRKeyInputHandler";
+import GameController from "./GameController";
 
 export default function App() {
-  useEffect(() => {
-    // Include your display statements to test below
-    /** 
-    document.getElementById("output")!.innerText = "OUTPUT:\n";
-    display("hey");
-    const redCar = new Car();
-    const blueCar = new Car();
-    redCar.drive();
-    blueCar.drive();
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-    const duckOne = new Duck();
-    const duckTwo = new Duck();
-    duckOne.quack();
-    duckTwo.quack();
-    */
+    useEffect(() => {
+        //Initialize the game components
+        const snake = new Snake(1,1); // Starting position (0, 0)
+        const world = new WorldModel(snake, 100, 100); // World size 20x20
+        const controller = new SnakeController(world, snake);
 
-    const snake = new Snake(0,0);
+        // Attach the canvas to the DOM
+        const canvasElement = canvasRef.current!;
+        const view = new CanvasWorldView(20); // Scaling factor of 20 pixels per grid unit
+        view["worldCanvas"] = canvasElement; // Use the canvas from the DOM
+        view["context"] = canvasElement.getContext("2d")!;
+
+        // Input handler for arrow keys
+        const inputHandler = new LRKeyInputHandler();
+        const human = new HumanPlayer(controller, inputHandler);
+
+        // Game controller
+        const game = new GameController(world);
+        game.setPlayer1(human);
+        game.setView(view);
+
+        // Start the game loop
+        game.run();
+
+        // Attach the input handler to the document
+        inputHandler.attach();
+
    
-    const world = new WorldModel(snake,15,15)
-    let canvasView = new CanvasWorldView(40)
-    world.setView(canvasView);
-    world.update(1)
 
-    /**
-    const snakeOne = new Snake();
-    const snakeTwo = new Snake();
-    
-    snakeOne.move(1);
-    display("Snake One position = " + snakeOne.position)
-    snakeOne.turn();
-    snakeOne.move(4);
-    display("Snake One position after turning and moving = " + snakeOne.position)
-    snakeTwo.move(5);
-    display("Snake Two position = " + snakeTwo.position)
-    snakeTwo.turn();
-    snakeTwo.move(10);
-    display("Snake Two position after turning and moving =" + snakeTwo.position)
-    */
-  }, []);
 
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-      <Display />
-    </div>
-  );
-
+    }, []);
+    return (
+        <div className="App">
+            <h1>Snake Game</h1>
+            <canvas ref={canvasRef} width="400" height="400" style={{ border: "1px solid black" }}></canvas>
+        </div>
+    );
 }
