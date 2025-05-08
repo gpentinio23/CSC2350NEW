@@ -12,6 +12,10 @@ class Point {
 	public get y() {
 		return this.ycoord
 	}
+
+    equals(p: Point): boolean {
+        return this.xcoord === p.x && this.ycoord === p.y;
+    }
 }
 
 export default Point;

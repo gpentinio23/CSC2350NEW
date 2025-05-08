@@ -1,10 +1,4 @@
-﻿/**
- * Tests for canvas world view
- * I used AI for this portion of testing as I was really unsure
- * about how to test the canvas and the context
- */
-
-import CanvasWorldView from "./CanvasWorldView";
+﻿import CanvasWorldView from "./CanvasWorldView";
 import WorldModel from "./Worldmodel";
 import Snake from "./Snake";
 import Point from "./Point";
@@ -40,8 +34,8 @@ describe("CanvasWorldView", () => {
   });
 
   it("sets canvas dimensions based on model and scaling", () => {
-    const snake = new Snake(0,0);
-    const model = new WorldModel(snake, 5, 6);
+    const snake = new Snake(new Point(0, 0), 1, 1); // Updated to use Point
+    const model = new WorldModel();
     view.display(model);
 
     expect(view["worldCanvas"].width).toBe(100);  // 5 * 20
@@ -49,8 +43,8 @@ describe("CanvasWorldView", () => {
   });
 
   it("fills the background with black", () => {
-    const snake = new Snake(0, 0);
-    const model = new WorldModel(snake, 5, 5);
+    const snake = new Snake(new Point(0, 0), 1, 1); // Updated to use Point
+    const model = new WorldModel();
     view.display(model);
 
     expect(mockContext.fillStyle).toBe("blue"); // Final color is for snake
@@ -58,8 +52,8 @@ describe("CanvasWorldView", () => {
   });
 
   it("draws the snake at the correct scaled position", () => {
-    const snake = new Snake(2,3); // position (2, 3)
-    const model = new WorldModel(snake, 10, 10);
+    const snake = new Snake(new Point(2, 3), 1, 1); // Updated to use Point
+    const model = new WorldModel();
     view.display(model);
 
     // Final call is for snake's square

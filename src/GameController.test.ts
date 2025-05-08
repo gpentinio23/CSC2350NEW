@@ -4,7 +4,7 @@ import Player from './Player';
 import IWorldView from './IWorldView';
 
 it("should call makeTurn on player1 if set", () => {
-    const world = new WorldModel({} as any, 10, 10);
+    const world = new WorldModel();
     const player1 = { makeTurn: jest.fn() } as unknown as Player;
 
     const controller = new GameController(world);
@@ -19,7 +19,7 @@ it("should call makeTurn on player1 if set", () => {
 });
 
 it("should call makeTurn on player2 if set", () => {
-    const world = new WorldModel({} as any, 10, 10);
+    const world = new WorldModel();
     const player2 = { makeTurn: jest.fn() } as unknown as Player;
 
     const controller = new GameController(world);
@@ -33,7 +33,7 @@ it("should call makeTurn on player2 if set", () => {
 });
 
 it("should call display on view when set", () => {
-    const world = new WorldModel({} as any, 10, 10);
+    const world = new WorldModel();
     const mockView = { display: jest.fn() } as IWorldView;
 
     const controller = new GameController(world);

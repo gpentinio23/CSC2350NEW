@@ -1,21 +1,43 @@
- import Snake from "./Snake";
- import Worldmodel from "./Worldmodel";
+import WorldModel from "./Worldmodel";
+import Snake from "./Snake";
+import Point from "./Point";
 
+describe("WorldModel", () => {
+    it("adds snakes and updates their position", () => {
+        const world = new WorldModel();
+        const snake = new Snake(new Point(0, 0), 1, 1); // right
+        world.addSnake(snake);
 
-it("updates the y position correctly after being turned and moved given that it started facing the right",function(){
-let snake1 = new Snake(0,1);
-let myWorld = new Worldmodel(snake1,0,0);
-const numSquares4 = Math.floor(Math.random() * 10);
-myWorld.update(numSquares4);
-expect(snake1.position.x).toBe(numSquares4)
-snake1.turnRight();
-myWorld.update(numSquares4);
-expect(snake1.position.x).toBe(0)
+        world.update(3);
+        expect(snake.position.x).toBe(3);
+        expect(snake.position.y).toBe(0);
+    });
+
+    it("removes a snake after collision with another", () => {
+        const world = new WorldModel();
+
+        const snake1 = new Snake(new Point(1, 1), 2, 1); // right
+        const snake2 = new Snake(new Point(5, 1), 2, -1); // left
+        world.addSnake(snake1);
+        world.addSnake(snake2);
+
+        // Move them toward each other so heads collide
+        world.update(2); // both move closer
+        world.update(1); // should now collide
+
+        expect(world.snakes.length).toBeLessThan(2); // one or both should be removed
+    });
+
+    it("calls display on all views", () => {
+        const world = new WorldModel();
+        const snake = new Snake(new Point(0, 0), 1, 1);
+        world.addSnake(snake);
+
+        const mockView = { display: jest.fn() };
+        world.addView(mockView);
+
+        world.update(1);
+
+        expect(mockView.display).toHaveBeenCalledWith(world);
+    });
 });
-
-
-
-
-
-
- export {};
