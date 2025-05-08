@@ -1,4 +1,6 @@
 import Point from "./Point";
+import ICollidable from "./ICollidable";
+import IActor from "./IActor";
 
 /**
  * Class representing a snake on the x,y coordinate plane.
@@ -6,6 +8,7 @@ import Point from "./Point";
 class Snake {
     private currentDirection: number;
     private currentParts: Point[];
+    private isCurrentlyActive: boolean = true;
 
     /**
      * Create a new Snake.
@@ -24,6 +27,28 @@ class Snake {
             else if (direction === 2) this.currentParts.push(new Point(prev.x, prev.y + 1));
             else if (direction === -2) this.currentParts.push(new Point(prev.x, prev.y - 1));
         }
+    }
+
+    /**
+     * Update the snake's position
+     * This method is called every tick of the game loop.
+     * Checks if the snake is dead or active
+     */
+    update(): void {
+        this.move(1)
+    }
+
+    die(): void {
+        this.isCurrentlyActive = false;
+    }
+
+    get isActive(): boolean {
+        return this.isCurrentlyActive;
+    }
+
+    get type(): string {
+        return "snake";
+  
     }
 
     /**
@@ -96,9 +121,30 @@ class Snake {
      * @param s The other snake (can also be this snake).
      * @returns true if head collides with another body part.
      */
-    public didCollide(s: Snake): boolean {
-        return s.parts.some(p => this.position.equals(p));
+    didCollide(actor: IActor): boolean {
+        if (actor["type"] !== "snake") {
+            return this.position.equals(actor["position"]);
+        } else if (actor === this) {
+            return this.parts.slice(1).some(p => p.equals(this.position));
+        } else {
+            return this.parts.some((p: Point) => p.equals(this.position));
+        }
     }
+
+    grow(): void {
+        const tail = this.parts[this.parts.length - 1];
+        let newTail: Point;
+
+        switch (this.currentDirection) {
+            case 1: newTail = new Point(tail.x - 1, tail.y); break;
+            case -1: newTail = new Point(tail.x + 1, tail.y); break;
+            case 2: newTail = new Point(tail.x, tail.y + 1); break;
+            case -2: newTail = new Point(tail.x, tail.y - 1); break;
+        }
+
+        this.parts.push(newTail!);
+    }
+
 }
 
 export default Snake;

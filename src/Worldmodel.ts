@@ -1,81 +1,109 @@
-import Snake from "./Snake";
 import IWorldView from "./IWorldView";
+import ArrayIterator from "./ArrayIterator";
+import ActorCollisionHandlers from "./ActorCollisionHandlers";
+import IActor from "./IActor";
+import ICollidable from "./ICollidable";
+import Snake from "./Snake";
+import SnakeSnakeCollisionHandler from "./SnakeSnakeCollisionHandler";
+import ICollisionHandler from "./ICollisionHandler";
+import SnakeFoodCollisionHandler from "./SnakeFoodCollisionHandler";
+
 
 /**
- * Represents the world model containing multiple snakes and views.
+ * Represents the world model containing multiple actors and views.
+ * Handles updates, collisions, and rendering.
  */
 class WorldModel {
-	private allSnakes: Snake[] = [];
-	private allViews: IWorldView[] = [];
-	private _width: number = 100;
-	private _height: number = 100;
+    private actors: IActor[] = [];
+    private views: IWorldView[] = [];
+    private _width: number = 100;
+    private _height: number = 100;
+    private handlers: ActorCollisionHandlers;
 
-	constructor() { }
+    /**
+     * Creates a new WorldModel with a collision handler map.
+     * @param aca The actor collision handler manager
+     */
+    constructor(aca: ActorCollisionHandlers) {
+        this.handlers = aca;
+    }
 
-	/**
-	 * Adds a snake to the world.
-	 * @param s Snake to add.
-	 */
-	addSnake(s: Snake): void {
-		this.allSnakes.push(s);
-	}
+    /**
+     * Adds an actor to the world.
+     * @param actor The actor to add
+     */
+    addActor(actor: IActor): void {
+        this.actors.push(actor);
+    }
 
-	/**
-	 * Adds a view to the world.
-	 * @param v View to add.
-	 */
-	addView(v: IWorldView): void {
-		this.allViews.push(v);
-	}
+    /**
+     * Adds a view to the world.
+     * @param view The view to add
+     */
+    addView(view: IWorldView): void {
+        this.views.push(view);
+    }
 
-	/**
-	 * Returns all snakes in the world.
-	 */
-	public get snakes(): Snake[] {
-		return this.allSnakes;
-	}
+    /**
+     * Returns the width of the world.
+     */
+    get width(): number {
+        return this._width;
+    }
 
-	/**
-	 * Returns the world's width.
-	 */
-	public get width(): number {
-		return this._width;
-	}
+    /**
+     * Returns the height of the world.
+     */
+    get height(): number {
+        return this._height;
+    }
 
-	/**
-	 * Returns the world's height.
-	 */
-	public get height(): number {
-		return this._height;
-	}
+    /**
+     * Returns an iterator over all actors in the world.
+     */
+    get allActors(): ArrayIterator<IActor> {
+        return new ArrayIterator(this.actors);
+    }
 
-	/**
-	 * Updates all snakes and views in the world.
-	 * Moves all snakes forward and removes any that collide.
-	 * @param steps Number of steps to move each snake.
-	 */
-	update(steps: number): void {
-		for (const snake of this.allSnakes) {
-			snake.move(steps);
-		}
+    /**
+     * Returns an array of all snakes in the world.
+     */
+    get snakes(): Snake[] {
+        return this.actors.filter((a): a is Snake => a.type === "snake");
+    }
 
-		const toRemove: Snake[] = [];
+    /**
+     * Updates all actors in the world and applies collision handlers.
+     */
+    update(): void {
+        for (const actor of this.actors) {
+            actor.update();
+        }
 
-		for (const snake of this.allSnakes) {
-			for (const other of this.allSnakes) {
-				if (snake !== other && snake.didCollide(other) && !toRemove.includes(snake)) {
-					toRemove.push(snake);
-					break;
-				}
-			}
-		}
+        for (let i = 0; i < this.actors.length; i++) {
+            for (let j = 0; j < this.actors.length; j++) {
+                if (i === j) continue;
 
-		this.allSnakes = this.allSnakes.filter(s => !toRemove.includes(s));
+                const a = this.actors[i];
+                const b = this.actors[j];
 
-		for (const view of this.allViews) {
-			view.display(this);
-		}
-	}
+                if (
+                    a.isActive && b.isActive &&
+                    typeof (a as any).didCollide === "function" &&
+                    (a as any).didCollide(b)
+                ) {
+                    if (this.handlers.hasCollisionAction(a.type, b.type)) {
+                        this.handlers.applyCollisionAction(a, b);
+                    }
+                }
+
+            }
+        }
+
+        for (const view of this.views) {
+            view.display(this);
+        }
+    }
 }
 
 export default WorldModel;

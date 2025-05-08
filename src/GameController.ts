@@ -29,8 +29,8 @@ class GameController {
             if (this.player1) this.player1.makeTurn();
             if (this.player2) this.player2.makeTurn();
 
-            if (time - this.lastTime > 250) {
-                this.world.update(1);
+            if (time - this.lastTime > 75) {
+                this.world.update();
                 this.lastTime = time;
 
                 if (this.view) {
