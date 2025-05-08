@@ -78,7 +78,4 @@ class AvoidWallsPlayer extends Player {
 }
 
 // Use named export for AvoidWallsPlayer
-export { AvoidWallsPlayer };
-
-// Default export for Player
-export default Player;
+export default AvoidWallsPlayer ;

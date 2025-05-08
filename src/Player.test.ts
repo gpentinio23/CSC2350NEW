@@ -10,6 +10,7 @@ describe("AvoidWallsPlayer", () => {
     const world = new WorldModel(snake, 10, 10);
     const controller = new SnakeController(world, snake);
     const player = new AvoidWallsPlayer(controller);
+    
 
     // Position snake at left edge and upper half
     snake.position = new Point(0, 2);
@@ -24,6 +25,8 @@ describe("AvoidWallsPlayer", () => {
     const world = new WorldModel(snake, 10, 10);
     const controller = new SnakeController(world, snake);
     const player = new AvoidWallsPlayer(controller);
+    
+   
 
     // Position snake at left edge and lower half
     snake.position = new Point(0, 7);
@@ -38,6 +41,7 @@ describe("AvoidWallsPlayer", () => {
     const world = new WorldModel(snake, 10, 10);
     const controller = new SnakeController(world, snake);
     const player = new AvoidWallsPlayer(controller);
+   
 
     player.makeTurn();
 

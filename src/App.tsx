@@ -5,10 +5,15 @@ import display from "./display";
  import Car from "./Car";
  import Duck from "./Duck";
  import Snake from "./Snake";
+ import CanvasWorldView from "./CanvasWorldView";
+ import WorldModel from "./Worldmodel"
+ import SnakeController from "./SnakeController"
+ import IWorldView from "./IWorldView";
 
 export default function App() {
   useEffect(() => {
     // Include your display statements to test below
+    /** 
     document.getElementById("output")!.innerText = "OUTPUT:\n";
     display("hey");
     const redCar = new Car();
@@ -20,6 +25,14 @@ export default function App() {
     const duckTwo = new Duck();
     duckOne.quack();
     duckTwo.quack();
+    */
+
+    const snake = new Snake(0,0);
+   
+    const world = new WorldModel(snake,15,15)
+    let canvasView = new CanvasWorldView(40)
+    world.setView(canvasView);
+    world.update(1)
 
     /**
     const snakeOne = new Snake();
